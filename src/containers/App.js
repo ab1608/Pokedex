@@ -1,8 +1,9 @@
 import React from 'react';
-import {getPokeData} from "./pokemon.js";
-import CardList from "./components/CardList.js";
-import ScrollBox from "./components/ScrollBox.js";
-import SearchBox from "./components/SearchBox.js";
+import {getPokeData} from "../pokemon.js";
+import CardList from "../components/CardList.js";
+import ScrollBox from "../components/ScrollBox.js";
+import SearchBox from "../components/SearchBox.js";
+import '../App.css'
 
 
 class App extends React.Component {
@@ -15,10 +16,17 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        for (let i = 0; i <= 1000; i++) {
+        const tempPokemon = [];
+        for (let i = 1; i <= 500; i++) {
             getPokeData(i)
                 .then((data) =>
-                    this.state.allPokemon.append(data));
+                    tempPokemon.push(data))
+                .then(() => {
+                    this.setState({allPokemon: tempPokemon})
+                })
+                .catch(error => {
+                    console.log("could not get due to: ", error)
+                })
         }
     }
 
